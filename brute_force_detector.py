@@ -31,6 +31,7 @@ from tkinter import ttk, messagebox
 from collections import deque, defaultdict
 from datetime import datetime
 from pathlib import Path
+from netsuite_theme import apply_theme, add_header
 
 LOG_PATHS = ["/var/log/auth.log", "/var/log/secure"]  # Debian/Kali, RHEL/CentOS
 IS_ROOT = (os.geteuid() == 0) if hasattr(os, "geteuid") else False
@@ -155,7 +156,7 @@ class BruteForceDetectorApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Brute-Force Login Detector")
-        self.root.geometry("950x600")
+        self.root.geometry("950x850")
         self.root.minsize(800, 480)
         self.root.configure(bg=BG_COLOR)
 
@@ -164,7 +165,9 @@ class BruteForceDetectorApp:
         self.ip_rows = {}  # ip -> treeview item id
         self.ip_data = {}  # ip -> dict of latest info
 
+        add_header(self.root, "Brute-Force Login Detector")
         self._build_ui()
+        apply_theme(self.root)
         self._poll_queue()
 
     # ---------------- UI ----------------
@@ -239,7 +242,7 @@ class BruteForceDetectorApp:
         log_frame = ttk.Frame(self.root, padding=10)
         log_frame.pack(fill="both", expand=False)
         ttk.Label(log_frame, text="Activity Log:").pack(anchor="w")
-        self.log_text = tk.Text(log_frame, height=8, state="disabled", wrap="word", bg="#111", fg="#ddd")
+        self.log_text = tk.Text(log_frame, height=8, state="disabled", wrap="word", bg="#111c2a", fg="#e4eaf2")
         self.log_text.pack(fill="both", expand=True)
 
     # ---------------- Actions ----------------
